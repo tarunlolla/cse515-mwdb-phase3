@@ -1,0 +1,2 @@
+dataset_path=/home/tarunlolla/MWDB/Phase3/phase3_sample_data/Labelled/Set1
+metadata_file=/home/tarunlolla/MWDB/Phase3/phase3_sample_data/labelled_set1.csv
