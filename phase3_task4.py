@@ -17,7 +17,8 @@ def PPR():
 
 def main():
     #un_dataset=input("Enter the path for unlabelled images: ")
-    clf=int(input("Select your preferred classifier model: \n1. SVM\n2. Decision-Tree\n3. PPR\t:\t"))
+    #clf=int(input("Select your preferred classifier model: \n1. SVM\n2. Decision-Tree\n3. PPR\t:\t"))
+    clf=3
     if clf==1:
         SVM()
     elif clf==2:

@@ -42,7 +42,7 @@ def buildTMatrix(simGraph_Dict,img_list):
 
 def PPR(simGraph_Dict,img_id1,img_id2,img_id3,img_list):
     tp_vector=[]
-    a=0.5
+    a=1
     for img in img_list:
         if img in [img_id1,img_id2,img_id3]:
             tp_vector.append(1/3)
@@ -58,13 +58,14 @@ def PPR(simGraph_Dict,img_id1,img_id2,img_id3,img_list):
     return list(pi)
 
 def visualise(images):
-    dataset_path,metadata_path=helpers.fetchDatasetDetails()
+    dataset_path,metadata_path=helpers.fetchDatasetDetails('task3')
     files=[x[0] for x in images]
     ppr=[x[1] for x in images]
     text=''
     for i in range(0,len(files)):
         text += helpers.make_html(dataset_path, files[i],ppr[i])
     html_file=open('render_task3.html','w')
+    print(dataset_path,metadata_path)
     html_file.write('<div style="display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(8, 5vw);grid-gap: 100px;">'+text+'</div>')
     wb.open_new_tab("render_task3.html")
 
@@ -79,9 +80,9 @@ def main():
     # img_id2=input("Enter Image ID 2: ")
     # img_id3=input("Enter Image ID 3: ")
     # K=input("Enter the value of K :")
-    img_id1='Hand_0000002.jpg'
-    img_id2='Hand_0000010.jpg'
-    img_id3='Hand_0009130.jpg'
+    img_id1='Hand_0009130.jpg'
+    img_id2='Hand_0009130.jpg'
+    img_id3='Hand_0000002.jpg'
     K=30
     ppr=PPR(simGraph_Dict,img_id1,img_id2,img_id3,image_list)
     dominantImages=[]

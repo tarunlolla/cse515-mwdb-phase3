@@ -23,7 +23,7 @@ def loadMetadata(db,md_file):
 
 def main():
     db=connectToDB.connectToDB()
-    dataset_path,metadata_path=helpers.fetchDatasetDetails()
+    dataset_path,metadata_path,_,_,_=helpers.fetchDatasetDetails()
     print("Loading metadata file")
     loadMetadata(db,metadata_path)
     print("Reading images at : "+dataset_path)

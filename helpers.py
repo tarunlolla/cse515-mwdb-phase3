@@ -5,15 +5,30 @@ import connectToDB
 import numpy as np
 from scipy.spatial import distance
 
-def fetchDatasetDetails():
-    dataset_input=open("dataset.txt",'r')
+"""
+ll_dataset_path=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/Labelled/Set2
+ll_metadata_file=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/labelled_set2.csv
+ull_dataset_path=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/Unlabelled/Set2
+ull_metadata_file=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/unlabelled_set2.csv
+master_metadata_file=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/HandInfo.csv
+"""
+
+def fetchDatasetDetails(task_name):
+    dataset_input=open("dataset_"+str(task_name)+".txt",'r')
     dataset_lines=dataset_input.readlines()
     dataset_dict=dict()
-    for line in dataset_lines:
-        a = line.rstrip().split('=')
-        dataset_dict[a[0]] = a[1]
-    dataset_input.close()
-    return dataset_dict['dataset_path'],dataset_dict['metadata_file']
+    if task_name=='task3':
+        for line in dataset_lines:
+            a = line.rstrip().split('=')
+            dataset_dict[a[0]] = a[1]
+        dataset_input.close()
+        return dataset_dict['dataset_path'],dataset_dict['metadata_file']
+    elif task_name=='task4':
+        for line in dataset_lines:
+            a = line.rstrip().split('=')
+            dataset_dict[a[0]] = a[1]
+        dataset_input.close()
+        return dataset_dict['ll_dataset_path'],dataset_dict['ll_metadata_file'],dataset_dict['ull_dataset_path'],dataset_dict['ull_metadata_file'],dataset_dict['master_metadata_file']
 
 def computePCA(dataMatrix,k):
     if(k!=0):

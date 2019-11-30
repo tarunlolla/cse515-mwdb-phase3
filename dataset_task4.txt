@@ -1,0 +1,5 @@
+ll_dataset_path=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/Labelled/Set2
+ll_metadata_file=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/labelled_set2.csv
+ull_dataset_path=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/Unlabelled/Set2
+ull_metadata_file=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/unlabelled_set2.csv
+master_metadata_file=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/HandInfo.csv
