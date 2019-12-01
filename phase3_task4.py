@@ -28,7 +28,7 @@ def main():
     else:
         print("Error!! Invalid input")
         exit(1)
-    un_dataset='/home/tarunlolla/MWDB/Phase3/phase3_sample_data/Unlabelled/Set 1'
+    un_dataset='/home/tarunlolla/MWDB/Phase3/phase3_sample_data/Unlabelled/Set1'
     un_dataset_md='/home/tarunlolla/MWDB/Phase3/phase3_sample_data/unlabelled_set1.csv'
 
 if __name__=="__main__":
