@@ -282,7 +282,7 @@ def DTC():
 
         master_label=master_md_aspects[idx].replace(" right","").replace(" left","")
 
-        print(master_label,cl_aspects[i])
+        print(img,master_label,cl_aspects[i])
 
         if master_label==cl_aspects[i]:
 

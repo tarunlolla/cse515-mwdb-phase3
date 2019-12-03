@@ -5,12 +5,18 @@ import phase3_task3 as t3
 import numpy as np
 import webbrowser as wb
 
-def trainPPR(df,img):
+def trainPPR(df,val):
+    img_list=list(df['imageName'])
     graphDict=t3.buildSimGraph(df['featureVector'],list(df['imageName']),5)
-    ppr=t3.PPR(graphDict,img,img,img,list(df['imageName']))
-    print("PPR")
+    T=t3.buildTMatrix(graphDict,img_list)
+    a=0.15
+    I=np.identity(len(img_list),float)
+    tp_prob=len(img_list)-val
+    tp_vector=[1/tp_prob]*val + [0]*tp_prob
+    tp_vector=np.array(tp_vector)
+    pi=np.matmul(np.linalg.inv(np.subtract(I,(a*T))),(1-a)*tp_vector)
     #print(len(ppr))
-    return ppr
+    return pi
 
 def visualise(df,ds):
     images=list(df['imageName'])
@@ -57,8 +63,8 @@ def PPR():
     print("Value = "+str(val1)+" "+str(val2))
     ddf_ull=dorsalDF.append(ull_feature_df,ignore_index=True)
     pdf_ull=palmarDF.append(ull_feature_df,ignore_index=True)
-    ddf_ppr=trainPPR(ddf_ull,'None')
-    pdf_ppr=trainPPR(pdf_ull,'None')
+    ddf_ppr=trainPPR(ddf_ull,val1)
+    pdf_ppr=trainPPR(pdf_ull,val2)
     ddf_ppr=ddf_ppr[val1:]
     pdf_ppr=pdf_ppr[val2:]
     for i in range(0,len(ddf_ppr)):
@@ -82,7 +88,7 @@ def PPR():
         img=cl_images[i]
         idx=master_md_images.index(img)
         master_label=master_md_aspects[idx].replace(" right","").replace(" left","")
-        print(master_label,cl_aspects[i])
+        print(img,master_label,cl_aspects[i])
         if master_label==cl_aspects[i]:
             sum += 1
     print("Accuracy = "+str(sum/len(cl_images)))

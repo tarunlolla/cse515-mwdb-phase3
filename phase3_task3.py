@@ -42,15 +42,12 @@ def buildTMatrix(simGraph_Dict,img_list):
 
 def PPR(simGraph_Dict,img_id1,img_id2,img_id3,img_list):
     tp_vector=[]
-    a=0.15
-    if img_id1=='None' and img_id2=='None' and img_id3=='None':
-        tp_vector= [1]*len(img_list)
-    else:
-        for img in img_list:
-            if img in [img_id1,img_id2,img_id3]:
-                tp_vector.append(1/3)
-            else:
-                tp_vector.append(0)
+    a=0.85
+    for img in img_list:
+        if img in [img_id1,img_id2,img_id3]:
+            tp_vector.append(1/3)
+        else:
+            tp_vector.append(0)
     T=buildTMatrix(simGraph_Dict,img_list)
 #    print(T)
     I=np.identity(len(img_list),float)

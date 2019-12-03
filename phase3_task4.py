@@ -24,7 +24,7 @@ def main():
     if clf==1:
         SVM.SVM()
     elif clf==2:
-        DTree()
+        DTree.DTree()
     elif clf==3:
         PPR.PPR()
     else:

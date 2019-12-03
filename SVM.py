@@ -168,7 +168,7 @@ def SVM():
         img=cl_images[i]
         idx=master_md_images.index(img)
         master_label=master_md_aspects[idx].replace(" right","").replace(" left","")
-        print(master_label,cl_aspects[i])
+        print(img,master_label,cl_aspects[i])
         if master_label==cl_aspects[i]:
             sum += 1
     print("Accuracy = "+str(sum/len(cl_images)))
