@@ -13,17 +13,20 @@ ull_metadata_file=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sam
 master_metadata_file=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/HandInfo.csv
 """
 
-def fetchDatasetDetails(task_name):
-    dataset_input=open("dataset_"+str(task_name)+".txt",'r')
-    dataset_lines=dataset_input.readlines()
-    dataset_dict=dict()
-    if task_name=='task3':
+def fetchDatasetDetails(task_name='initial'):
+    if task_name=='task3' or task_name=='initial':
+        dataset_input=open("dataset_task3.txt",'r')
+        dataset_lines=dataset_input.readlines()
+        dataset_dict=dict()
         for line in dataset_lines:
             a = line.rstrip().split('=')
             dataset_dict[a[0]] = a[1]
         dataset_input.close()
         return dataset_dict['dataset_path'],dataset_dict['metadata_file']
     elif task_name=='task4':
+        dataset_input=open("dataset_"+str(task_name)+".txt",'r')
+        dataset_lines=dataset_input.readlines()
+        dataset_dict=dict()
         for line in dataset_lines:
             a = line.rstrip().split('=')
             dataset_dict[a[0]] = a[1]

@@ -5,6 +5,7 @@ import cv2
 import initialSteps
 from scipy.spatial import distance
 import webbrowser as wb
+import matplotlib.pyplot as plt
 
 def getFeatureVectorsLL(dataset,metadata):
     imageList=list(metadata['imageName'])
@@ -19,9 +20,9 @@ def getFeatureVectorsLL(dataset,metadata):
         imgVector.append([image,hog,aspectOfHand])
     feature_df=pd.DataFrame(imgVector,columns=['imageName','featureVector','aspectOfHand'])
     #print(feature_df)
-    #latentVectors=helpers.computePCA(np.array(list(feature_df['featureVector'])),20)
+    latentVectors=helpers.computePCA(np.array(list(feature_df['featureVector'])),2)
     #print(latentVectors)
-    latentVectors=list(feature_df['featureVector'])
+    #latentVectors=list(feature_df['featureVector'])
     print("latentVectors computed")
     feature_df['latentVector']=list(latentVectors)
     return feature_df
@@ -37,9 +38,9 @@ def getFeatureVectorsULL(dataset,metadata):
         imgVector.append([image,hog])
     feature_df=pd.DataFrame(imgVector,columns=['imageName','featureVector'])
     #print(feature_df)
-    # latentVectors=helpers.computePCA(np.array(list(feature_df['featureVector'])),20)
+    latentVectors=helpers.computePCA(np.array(list(feature_df['featureVector'])),2)
     # print(latentVectors)
-    latentVectors=list(feature_df['featureVector'])
+    #latentVectors=list(feature_df['featureVector'])
     print("latentVectors computed")
     feature_df['latentVector']=list(latentVectors)
     return feature_df
@@ -107,6 +108,10 @@ def SVM():
     palmarDF = palmarDF.append(rows, ignore_index=True)
     dorsalDF = lbl_feature_df
     dorsalDF.drop(rows.index, inplace=True)
+    for i in range(len(list(dorsalDF['latentVector']))):
+        plt.scatter(list(dorsalDF['latentVector'])[i][0],list(dorsalDF['latentVector'])[i][1],label='Dorsal',c='red',s=80)
+    for i in range(len(list(palmarDF['latentVector']))):
+        plt.scatter(list(palmarDF['latentVector'])[i][0],list(palmarDF['latentVector'])[i][1],label='Palmar',c='blue',s=80)
     distance_df=computeDistance(dorsalDF,palmarDF)
     #print(distance_df.head(10))
     print(distance_df['distance'].min())
@@ -118,7 +123,9 @@ def SVM():
     print(palmarDF.loc[[idx_palmar]])
     dorsal_margin=dorsalDF['latentVector'][idx_dorsal]
     palmar_margin=palmarDF['latentVector'][idx_palmar]
-    
+    plt.scatter(dorsal_margin[0],dorsal_margin[1],marker='+',c='red',s=80)
+    plt.scatter(palmar_margin[0],palmar_margin[1],marker='+',c='blue',s=80)
+    plt.show()
     # if nearestToOrigin(,)==0:
     #     vector=lbl_feature_df['latentVector'][idx_ll]
     # else:

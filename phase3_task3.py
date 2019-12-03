@@ -42,18 +42,22 @@ def buildTMatrix(simGraph_Dict,img_list):
 
 def PPR(simGraph_Dict,img_id1,img_id2,img_id3,img_list):
     tp_vector=[]
-    a=1
+    a=0.67
     for img in img_list:
         if img in [img_id1,img_id2,img_id3]:
             tp_vector.append(1/3)
         else:
             tp_vector.append(0)
     T=buildTMatrix(simGraph_Dict,img_list)
+    print(T)
     I=np.identity(len(img_list),float)
     tp_vector=np.array(tp_vector)
     # print(simGraph_Dict)
     print(T.shape,I.shape,np.transpose(tp_vector).shape)
-    pi=np.dot(np.linalg.inv(np.subtract(I,(a*T))),(1-a)*tp_vector)
+    if a==1:
+        pi=np.linalg.inv(np.subtract(I,(a*T)))
+    else:
+        pi=np.dot(np.linalg.inv(np.subtract(I,(a*T))),(1-a)*tp_vector)
     print(pi.shape)
     return list(pi)
 
@@ -74,16 +78,19 @@ def main():
     featureVectors,image_list=helpers.getFeatureVectors()
     latentVectors=helpers.computePCA(featureVectors,20)
     # k=input("Enter the value of k :")
-    k=10
+    k=5
     simGraph_Dict=buildSimGraph(latentVectors,image_list,k)
     # img_id1=input("Enter Image ID 1: ")
     # img_id2=input("Enter Image ID 2: ")
     # img_id3=input("Enter Image ID 3: ")
     # K=input("Enter the value of K :")
-    img_id1='Hand_0009130.jpg'
+    img_id1='Hand_0000010.jpg'
     img_id2='Hand_0009130.jpg'
     img_id3='Hand_0000002.jpg'
-    K=30
+    K=10
+    print(simGraph_Dict[img_id1][:K])
+    print(simGraph_Dict[img_id2][:K])
+    print(simGraph_Dict[img_id3][:K])
     ppr=PPR(simGraph_Dict,img_id1,img_id2,img_id3,image_list)
     dominantImages=[]
     ppr_temp=ppr
