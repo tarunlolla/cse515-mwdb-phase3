@@ -23,7 +23,7 @@ def visualise(df,ds):
     html_file.write('<div style="display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(8, 5vw);grid-gap: 100px;">'+text+'</div>')
     wb.open_new_tab("render_task4.html")
 
-def main():
+def PPR():
     lbl_ds,lbl_md,ull_ds,ull_md,master_md=helpers.fetchDatasetDetails('task4')
     lbl_md_df=pd.read_csv(lbl_md,delimiter=',')
     lbl_md_df=lbl_md_df.replace({'dorsal left': 'dorsal','dorsal right': 'dorsal','palmar left': 'palmar','palmar right': 'palmar'})
@@ -49,7 +49,7 @@ def main():
     ull_feature_df=pd.DataFrame(ull_fv,columns=['imageName','featureVector'])
     print("Training the model")
     #print(lbl_feature_df.shape)
-#    ppr_ll=trainPPR(lbl_feature_df)
+    #ppr_ll=trainPPR(lbl_feature_df)
     nanList=[np.nan]*ull_feature_df.shape[0]
     ull_feature_df['aspectOfHand']=nanList
     val1=dorsalDF.shape[0]
@@ -105,4 +105,4 @@ def main():
 #    print(df)
 
 if __name__=='__main__':
-    main()
+    PPR()

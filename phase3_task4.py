@@ -1,5 +1,7 @@
 import helpers
 import numpy as np
+import PPR
+import SVM
 
 def SVM():
     print("SVM")
@@ -17,14 +19,14 @@ def PPR():
 
 def main():
     #un_dataset=input("Enter the path for unlabelled images: ")
-    #clf=int(input("Select your preferred classifier model: \n1. SVM\n2. Decision-Tree\n3. PPR\t:\t"))
+    #clf=int(input("Select your preferred classifier model: \n1. SVM.py\n2. Decision-Tree\n3. PPR\t:\t"))
     clf=3
     if clf==1:
-        SVM()
+        SVM.SVM()
     elif clf==2:
         DTree()
     elif clf==3:
-        PPR()
+        PPR.PPR()
     else:
         print("Error!! Invalid input")
         exit(1)

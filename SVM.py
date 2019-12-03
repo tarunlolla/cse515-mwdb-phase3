@@ -51,7 +51,7 @@ def computeDistance(df1,df2):
     distance_df=pd.DataFrame(columns=['dorsal_img','palmar_img','distance'])
     for i in range(df1.shape[0]):
         for j in range(df2.shape[0]):
-            d=distance.euclidean(df1['latentVector'][i],df2['latentVector'][j])
+            d=distance.cosine(df1['latentVector'][i],df2['latentVector'][j])
             distance_df=distance_df.append({'dorsal_img':df1['imageName'][i],'palmar_img':df2['imageName'][j],'distance':round(d,2)},ignore_index=True)
     return distance_df
 
@@ -59,8 +59,8 @@ def nearestToOrigin(v1,v2):
     print(v1)
     print(v2)
     org=[0]*20
-    d1=distance.euclidean(org,v1)
-    d2=distance.euclidean(org,v2)
+    d1=distance.cosine(org,v1)
+    d2=distance.cosine(org,v2)
     print(d1,d2)
     if d1>d2:
         return 1
@@ -72,12 +72,10 @@ def SVClassify(ull_feature_df,w,b,dm,pm):
     for i in range(0,ull_feature_df.shape[0]):
         vec=np.array(ull_feature_df['latentVector'][i])
         c=np.dot(vec,w)+b
-        if c>=pm:
+        if c<0:
             aspects.append('palmar')
-        elif c<=dm:
+        elif c>=0:
             aspects.append('dorsal')
-        else:
-            aspects.append('None')
     print(ull_feature_df.shape)
     print(len(aspects))
     ull_feature_df['aspectOfHand']=list(aspects)
@@ -95,6 +93,7 @@ def visualise(df,ds):
     wb.open_new_tab("render_task4.html")
 
 def SVM():
+    lDim=2
     lbl_ds,lbl_md,ull_ds,ull_md,master_md=helpers.fetchDatasetDetails('task4')
     lbl_md_df=pd.read_csv(lbl_md,delimiter=',')
     lbl_md_df=lbl_md_df.replace({'dorsal left': 'dorsal','dorsal right': 'dorsal','palmar left': 'palmar','palmar right': 'palmar'})
@@ -104,7 +103,7 @@ def SVM():
         lbl_fv.append([img,vec])
     lbl_feature_df=pd.DataFrame(lbl_fv,columns=['imageName','featureVector'])
     lbl_feature_df['aspectOfHand']=list(lbl_md_df['aspectOfHand'])
-    latentVectors=helpers.computePCA(np.array(list(lbl_feature_df['featureVector'])),2)
+    latentVectors=helpers.computePCA(np.array(list(lbl_feature_df['featureVector'])),lDim)
     print("latentVectors computed")
     lbl_feature_df['latentVector']=list(latentVectors)
     # lbl_feature_df=getFeatureVectorsLL(lbl_ds,lbl_md_df)
@@ -114,7 +113,7 @@ def SVM():
         vec=connectToDB.getFeatureVectorDB(connectToDB.connectToDB(),'hog',img)
         ull_fv.append([img,vec])
     ull_feature_df=pd.DataFrame(ull_fv,columns=['imageName','featureVector'])
-    latentVectors=helpers.computePCA(np.array(list(ull_feature_df['featureVector'])),2)
+    latentVectors=helpers.computePCA(np.array(list(ull_feature_df['featureVector'])),lDim)
     print("latentVectors computed")
     ull_feature_df['latentVector']=list(latentVectors)
     # ull_feature_df=getFeatureVectorsULL(ull_ds,ull_md_df)
@@ -126,10 +125,11 @@ def SVM():
     palmarDF = palmarDF.append(rows, ignore_index=True)
     dorsalDF = lbl_feature_df
     dorsalDF.drop(rows.index, inplace=True)
-    for i in range(len(list(dorsalDF['latentVector']))):
-        plt.scatter(list(dorsalDF['latentVector'])[i][0],list(dorsalDF['latentVector'])[i][1],label='Dorsal',c='red',s=80)
-    for i in range(len(list(palmarDF['latentVector']))):
-        plt.scatter(list(palmarDF['latentVector'])[i][0],list(palmarDF['latentVector'])[i][1],label='Palmar',c='blue',s=80)
+    if lDim==2:
+        for i in range(len(list(dorsalDF['latentVector']))):
+            plt.scatter(list(dorsalDF['latentVector'])[i][0],list(dorsalDF['latentVector'])[i][1],label='Dorsal',c='red',s=80)
+        for i in range(len(list(palmarDF['latentVector']))):
+            plt.scatter(list(palmarDF['latentVector'])[i][0],list(palmarDF['latentVector'])[i][1],label='Palmar',c='blue',s=80)
     distance_df=computeDistance(dorsalDF,palmarDF)
     #print(distance_df.head(10))
     print(distance_df['distance'].min())
@@ -141,13 +141,10 @@ def SVM():
     print(palmarDF.loc[[idx_palmar]])
     dorsal_margin=dorsalDF['latentVector'][idx_dorsal]
     palmar_margin=palmarDF['latentVector'][idx_palmar]
-    plt.scatter(dorsal_margin[0],dorsal_margin[1],marker='+',c='red',s=80)
-    plt.scatter(palmar_margin[0],palmar_margin[1],marker='+',c='blue',s=80)
-    plt.show()
-    # if nearestToOrigin(,)==0:
-    #     vector=lbl_feature_df['latentVector'][idx_ll]
-    # else:
-    #     vector=ull_feature_df['latentVector'][idx_ull]
+    if lDim==2:
+        plt.scatter(dorsal_margin[0],dorsal_margin[1],marker='+',c='red',s=80)
+        plt.scatter(palmar_margin[0],palmar_margin[1],marker='+',c='blue',s=80)
+        plt.show()
     midPoint=[]
     for i in range(0,len(dorsal_margin)):
         midPoint.append((dorsal_margin[i]+palmar_margin[i])/2)

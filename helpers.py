@@ -15,7 +15,7 @@ master_metadata_file=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_
 
 def fetchDatasetDetails(task_name='initial'):
     if task_name=='task3' or task_name=='initial':
-        dataset_input=open("dataset_task3.txt",'r')
+        dataset_input=open("dataset.txt",'r')
         dataset_lines=dataset_input.readlines()
         dataset_dict=dict()
         for line in dataset_lines:

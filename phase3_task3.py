@@ -44,7 +44,7 @@ def PPR(simGraph_Dict,img_id1,img_id2,img_id3,img_list):
     tp_vector=[]
     a=0.15
     if img_id1=='None' and img_id2=='None' and img_id3=='None':
-        tp_vector=[1]*len(img_list)
+        tp_vector= [1]*len(img_list)
     else:
         for img in img_list:
             if img in [img_id1,img_id2,img_id3]:
