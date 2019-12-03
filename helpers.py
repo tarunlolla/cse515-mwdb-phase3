@@ -42,22 +42,8 @@ def computePCA(dataMatrix,k):
     trans_matrix = pca.fit_transform(dataMatrix)
     return trans_matrix
 
-def getFeatureVectors():
-    db = connectToDB.connectToDB()
-    collection = db.HandInfo
-    all_images = []
-    dataMatrix=[]
-    records=collection.find({},{"imageName":1,"_id":0}).sort("imageName")
-    for record in records:
-        all_images.append(record['imageName'])
-    for img in all_images:
-        fm=connectToDB.getFeatureVectorDB(db,'hog',img)
-        dataMatrix.append(fm)
-    dataMatrix = np.array(dataMatrix)
-    return dataMatrix, all_images
-
 def findEuclideanDistance(vector1,vector2):
-    return distance.euclidean(vector1,vector2)
+    return 1-distance.cosine(vector1,vector2)
 
 def make_html(folder, image, extras):
     text='<div style="height:175px;width:175px;border:1px;border-style:solid;border-color:rgb(0,0,0);"><img src="{}" style="display:block;height:120px;width:160px;margin:5px;"/><p style="font: italic smaller sans-serif; text-align:center;">{}<br>{}</p></div>'.format(os.path.join(folder, image),image,extras)

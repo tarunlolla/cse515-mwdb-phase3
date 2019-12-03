@@ -1,2 +1,2 @@
-dataset_path=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/Unlabelled/Set2
-metadata_file=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/unlabelled_set2.csv
+dataset_path=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/Labelled/Set2
+metadata_file=/home/tarunlolla/MWDB/Phase3/cse515-mwdb-phase3.git/phase3_sample_data/labelled_set2.csv
