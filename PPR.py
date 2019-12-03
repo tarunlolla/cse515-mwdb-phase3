@@ -93,22 +93,6 @@ def PPR():
             sum += 1
     print("Accuracy = "+str(sum/len(cl_images)))
 
-    # for idx in range(ull_feature_df.shape[0]):
-    #     ddf=dorsalDF
-    #     pdf=palmarDF
-    #     img=ull_feature_df.iloc[idx]['imageName']
-    #     # fv=ull_feature_df.iloc[idx]['featureVector']
-    #     obj=ull_feature_df.iloc[idx]
-    #     obj['aspectOfHand']=np.nan
-    #     #print(dict(obj))
-    #     ddf=ddf.append(obj,ignore_index=True)
-    #     pdf=pdf.append(obj,ignore_index=True)
-    #     d_ppr=trainPPR(ddf,img)
-    #     p_ppr=trainPPR(pdf,img)
-    #     print(d_ppr[-1],p_ppr[-1])
-        #df.loc[df.shape[0]-1+idx]=[img,list(fv),'None']
-
-#    print(df)
 
 if __name__=='__main__':
     PPR()

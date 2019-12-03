@@ -172,9 +172,6 @@ def SVM():
         if master_label==cl_aspects[i]:
             sum += 1
     print("Accuracy = "+str(sum/len(cl_images)))
-    #print(lbl_ds,lbl_md,ull_ds,ull_md,master_md)
-    #print(lbl_md_df)
-    #print(ull_md_df)
 
 if __name__=='__main__':
     SVM()

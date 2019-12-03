@@ -94,22 +94,22 @@ def getFeatureVectors():
 def main():
     featureVectors,image_list=getFeatureVectors()
     latentVectors=helpers.computePCA(featureVectors,20)
-    # k=input("Enter the value of k :")
-    k=5
+    k=int(input("Enter the value of k :"))
+    #k=5
     simGraph_Dict=buildSimGraph(latentVectors,image_list,k)
-    # img_id1=input("Enter Image ID 1: ")
-    # img_id2=input("Enter Image ID 2: ")
-    # img_id3=input("Enter Image ID 3: ")
-    # K=input("Enter the value of K :")
+    img_id1=input("Enter Image ID 1: ")
+    img_id2=input("Enter Image ID 2: ")
+    img_id3=input("Enter Image ID 3: ")
+    K=int(input("Enter the value of K :"))
     #Hand_0008333.jpg, Hand_0006183.jpg, Hand_0000074.jpg
     # img_id1='Hand_0008333.jpg'
     # img_id2='Hand_0006183.jpg'
     # img_id3='Hand_0000074.jpg'
     #Hand_0003457.jpg,Hand_0000074.jpg, Hand_0005661.jpg
-    img_id1='Hand_0003457.jpg'
-    img_id2='Hand_0000074.jpg'
-    img_id3='Hand_0005661.jpg'
-    K=10
+    # img_id1='Hand_0003457.jpg'
+    # img_id2='Hand_0000074.jpg'
+    # img_id3='Hand_0005661.jpg'
+    #K=10
     #print(simGraph_Dict[img_id1][:K])
     #print(simGraph_Dict[img_id2][:K])
     #print(simGraph_Dict[img_id3][:K])
